@@ -4,16 +4,21 @@ using Freedius;
 
 public class Player : KinematicBody2D
 {
-    ///// Properties
-    ActorState PlayerMovement { get; set; }
+    ///// Nodes
+    public AnimationPlayer NodeAnimationPlayer  { get; set; }
+    public AnimationTree NodeAnimationTree      { get; set; }
+
+    ///// States
+    private ActorState PlayerMovement           { get; set; }
 
     ///// Functions
-
-    // Class Functions
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        // Get Nodes
+        NodeAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        NodeAnimationTree = GetNode<AnimationTree>("AnimationTree");
         // Setup Player States
         PlayerMovement = new PlayerDefaultMovementState(this);
         PlayerMovement.Start();

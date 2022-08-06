@@ -1,61 +1,178 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=30 format=2]
 
-[ext_resource path="res://Prefabs/Player/Anim-Main/0008.png" type="Texture" id=1]
 [ext_resource path="res://Prefabs/Player/Player.cs" type="Script" id=2]
-[ext_resource path="res://Prefabs/Player/Anim-Main/0013.png" type="Texture" id=3]
 [ext_resource path="res://Prefabs/Player/Anim-Main/0004.png" type="Texture" id=4]
-[ext_resource path="res://Prefabs/Player/Anim-Main/0012.png" type="Texture" id=5]
 [ext_resource path="res://Prefabs/Player/Anim-Main/0006.png" type="Texture" id=6]
 [ext_resource path="res://Prefabs/Player/Anim-Main/0003.png" type="Texture" id=7]
-[ext_resource path="res://Prefabs/Player/Anim-Main/0015.png" type="Texture" id=8]
-[ext_resource path="res://Prefabs/Player/Anim-Main/0014.png" type="Texture" id=9]
-[ext_resource path="res://Prefabs/Player/Anim-Main/0011.png" type="Texture" id=10]
 [ext_resource path="res://Prefabs/Player/Anim-Main/0001.png" type="Texture" id=11]
-[ext_resource path="res://Prefabs/Player/Anim-Main/0009.png" type="Texture" id=12]
-[ext_resource path="res://Prefabs/Player/Anim-Main/0010.png" type="Texture" id=13]
 [ext_resource path="res://Prefabs/Player/Anim-Main/0002.png" type="Texture" id=14]
 [ext_resource path="res://Prefabs/Player/Anim-Main/0007.png" type="Texture" id=15]
 [ext_resource path="res://Prefabs/Player/Anim-Main/0005.png" type="Texture" id=16]
-[ext_resource path="res://Prefabs/Player/Anim-Main/0000.png" type="Texture" id=17]
-
-[sub_resource type="SpriteFrames" id=2]
-animations = [ {
-"frames": [ ExtResource( 4 ), ExtResource( 16 ), ExtResource( 6 ), ExtResource( 15 ) ],
-"loop": false,
-"name": "up",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": false,
-"name": "idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 7 ), ExtResource( 14 ), ExtResource( 11 ) ],
-"loop": false,
-"name": "down",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 16 ), ExtResource( 6 ), ExtResource( 15 ), ExtResource( 1 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 17 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "spin",
-"speed": 45.0
-} ]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
 
+[sub_resource type="Animation" id=3]
+resource_name = "down"
+length = 0.15
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 7 ), ExtResource( 14 ), ExtResource( 11 ) ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "down_reverse"
+length = 0.15
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ), ExtResource( 14 ), ExtResource( 7 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 0.001
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 4 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "up"
+length = 0.15
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 16 ), ExtResource( 6 ), ExtResource( 15 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "up_reverse"
+length = 0.15
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 15 ), ExtResource( 6 ), ExtResource( 16 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "down"
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "down_reverse"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "up"
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "up_reverse"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=15]
+states/down/node = SubResource( 6 )
+states/down/position = Vector2( 565.123, 253.667 )
+states/down_reverse/node = SubResource( 19 )
+states/down_reverse/position = Vector2( 334.556, 254.259 )
+states/idle/node = SubResource( 7 )
+states/idle/position = Vector2( 335, 153.667 )
+states/up/node = SubResource( 8 )
+states/up/position = Vector2( 564.597, 48.3333 )
+states/up_reverse/node = SubResource( 20 )
+states/up_reverse/position = Vector2( 335, 47.8889 )
+transitions = [ "idle", "up", SubResource( 9 ), "idle", "down", SubResource( 10 ), "down", "up", SubResource( 13 ), "up", "down", SubResource( 14 ), "up", "up_reverse", SubResource( 21 ), "up_reverse", "idle", SubResource( 22 ), "down", "down_reverse", SubResource( 23 ), "down_reverse", "idle", SubResource( 24 ) ]
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=16]
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 16
+collision/safe_margin = 0.001
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 2 )
-animation = "idle"
-playing = true
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 2, -2 )
+modulate = Color( 0.164706, 1, 0, 1 )
+position = Vector2( 6, 0 )
 shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/down = SubResource( 3 )
+anims/down_reverse = SubResource( 17 )
+anims/idle = SubResource( 4 )
+anims/up = SubResource( 5 )
+anims/up_reverse = SubResource( 18 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 15 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 16 )
