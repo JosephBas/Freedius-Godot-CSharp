@@ -1,30 +1,40 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scenes/System/GameManager.cs" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
-[ext_resource path="res://Scenes/System/MainView.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/System/View.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/System/GameManager.cs" type="Script" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=4]
 
 [node name="GameManager" type="Node"]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
-[node name="MainViewContainer" type="ViewportContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="ViewContainer" type="ViewportContainer" parent="."]
+margin_right = 320.0
+margin_bottom = 240.0
 stretch = true
 
-[node name="MainView" type="Viewport" parent="MainViewContainer"]
+[node name="View" type="Viewport" parent="ViewContainer"]
 size = Vector2( 320, 240 )
 handle_input_locally = false
 render_target_update_mode = 3
-script = ExtResource( 3 )
+script = ExtResource( 1 )
 
-[node name="Icon" type="Sprite" parent="MainViewContainer/MainView"]
-texture = ExtResource( 2 )
+[node name="Icon" type="Sprite" parent="ViewContainer/View"]
+texture = ExtResource( 3 )
 
-[node name="ColorRect" type="ColorRect" parent="MainViewContainer/MainView"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Icon2" type="Sprite" parent="ViewContainer/View"]
+position = Vector2( 320, 0 )
+texture = ExtResource( 3 )
 
-[connection signal="size_changed" from="MainViewContainer/MainView" to="MainViewContainer/MainView" method="_OnMainViewSizeChanged"]
+[node name="Icon3" type="Sprite" parent="ViewContainer/View"]
+position = Vector2( 0, 240 )
+texture = ExtResource( 3 )
+
+[node name="Icon4" type="Sprite" parent="ViewContainer/View"]
+position = Vector2( 320, 240 )
+texture = ExtResource( 3 )
+
+[node name="Player" parent="ViewContainer/View" instance=ExtResource( 4 )]
+position = Vector2( 160, 120 )
+
+[connection signal="size_changed" from="ViewContainer/View" to="ViewContainer/View" method="_OnViewSizeChanged"]
