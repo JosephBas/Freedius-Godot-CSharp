@@ -15,7 +15,17 @@ namespace Freedius
 
         // Movement
         Vector2 direction;
-        float speed;
+        float base_speed;
+        float extra_speed;
+
+        // Update Animation/BlendTrees Speed
+        void UpdateAnimationSpeed()
+        {
+            player_ref.NodeAnimationTree.Set("parameters/up/TimeScale/scale",           0.75f + (extra_speed / base_speed));
+            player_ref.NodeAnimationTree.Set("parameters/up_reverse/TimeScale/scale",   0.75f + (extra_speed / base_speed));
+            player_ref.NodeAnimationTree.Set("parameters/down/TimeScale/scale",         0.75f + (extra_speed / base_speed));
+            player_ref.NodeAnimationTree.Set("parameters/down_reverse/TimeScale/scale", 0.75f + (extra_speed / base_speed));
+        }
 
         // Constructor
         public PlayerDefaultMovementState(Player p)
@@ -27,11 +37,15 @@ namespace Freedius
         public void Start()
         {
             // Get Animation State Machine reference
-            animation_state_machine = (AnimationNodeStateMachinePlayback)player_ref.NodeAnimationTree.Get("parameters/playback");
+            animation_state_machine = (AnimationNodeStateMachinePlayback) player_ref.NodeAnimationTree.Get("parameters/playback");
             // Initialize direction vector
-            direction = new Vector2(0, 0);
-            // Initialize speed
-            speed = 2.0f;
+            direction   = new Vector2(0, 0);
+            // Initialize Base Speed
+            base_speed  = 2.0f;
+            // Initialize Extra Speed
+            extra_speed = 0.0f;
+            // Setup Animation Speed
+            UpdateAnimationSpeed();
         }
 
         // Update
@@ -44,25 +58,32 @@ namespace Freedius
             // Change Animation
             if ( direction.y > 0 )
             {
+                // Travel to "down" node
                 animation_state_machine.Travel("down");
             }
             else if ( direction.y < 0 )
             {
+                // Travel to "up" node
                 animation_state_machine.Travel("up");
             }
             else if ( direction.y == 0 && !player_ref.NodeAnimationPlayer.IsPlaying() )
             {
+                // Travel to "idle" node
                 animation_state_machine.Travel("idle");
             }
 
             // Speed Change Input
             if ( Input.IsActionJustPressed("game_speed_up") )
             {
-                speed = Mathf.Clamp(speed + 2, 2, 6);
+                extra_speed = Mathf.Clamp(extra_speed + 1, 0, 3);
+                //GD.Print($"Speed Level: {extra_speed + 1}");
+                UpdateAnimationSpeed();
             }
             else if ( Input.IsActionJustPressed("game_speed_down") )
             {
-                speed = Mathf.Clamp(speed - 2, 2, 6);
+                extra_speed = Mathf.Clamp(extra_speed - 1, 0, 3);
+                //GD.Print($"Speed Level: {extra_speed + 1}");
+                UpdateAnimationSpeed();
             }
         }
 
@@ -70,7 +91,7 @@ namespace Freedius
         public void FixedUpdate(float delta)
         {
             // Move
-            player_ref.MoveAndCollide(direction * speed);
+            player_ref.MoveAndCollide(direction * (base_speed + extra_speed) );
             
             // Clamp player position to a limit Area
             if (player_ref.Position.x < GameGlobals.PlayableArea.Position.x ||

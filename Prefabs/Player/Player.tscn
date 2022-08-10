@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.cs" type="Script" id=2]
 [ext_resource path="res://Prefabs/Player/Anim-Main/0004.png" type="Texture" id=4]
@@ -97,54 +97,92 @@ tracks/0/keys = {
 "values": [ ExtResource( 15 ), ExtResource( 6 ), ExtResource( 16 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=19]
 animation = "down"
 
-[sub_resource type="AnimationNodeAnimation" id=19]
+[sub_resource type="AnimationNodeTimeScale" id=20]
+
+[sub_resource type="AnimationNodeBlendTree" id=21]
+nodes/Animation/node = SubResource( 19 )
+nodes/Animation/position = Vector2( 320, 160 )
+nodes/TimeScale/node = SubResource( 20 )
+nodes/TimeScale/position = Vector2( 480, 160 )
+nodes/output/position = Vector2( 640, 180 )
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=22]
 animation = "down_reverse"
+
+[sub_resource type="AnimationNodeTimeScale" id=23]
+
+[sub_resource type="AnimationNodeBlendTree" id=24]
+graph_offset = Vector2( 18, -92 )
+nodes/Animation/node = SubResource( 22 )
+nodes/Animation/position = Vector2( 240, 40 )
+nodes/TimeScale/node = SubResource( 23 )
+nodes/TimeScale/position = Vector2( 460, 40 )
+nodes/output/position = Vector2( 620, 60 )
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=7]
 animation = "idle"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=25]
 animation = "up"
 
-[sub_resource type="AnimationNodeAnimation" id=20]
+[sub_resource type="AnimationNodeTimeScale" id=26]
+
+[sub_resource type="AnimationNodeBlendTree" id=27]
+nodes/Animation/node = SubResource( 25 )
+nodes/Animation/position = Vector2( 360, 160 )
+nodes/TimeScale/node = SubResource( 26 )
+nodes/TimeScale/position = Vector2( 520, 160 )
+nodes/output/position = Vector2( 680, 180 )
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=28]
 animation = "up_reverse"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+[sub_resource type="AnimationNodeTimeScale" id=29]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+[sub_resource type="AnimationNodeBlendTree" id=30]
+nodes/Animation/node = SubResource( 28 )
+nodes/Animation/position = Vector2( 200, 160 )
+nodes/TimeScale/node = SubResource( 29 )
+nodes/TimeScale/position = Vector2( 400, 160 )
+nodes/output/position = Vector2( 560, 180 )
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=21]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=23]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
 switch_mode = 2
 auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
 
 [sub_resource type="AnimationNodeStateMachine" id=15]
-states/down/node = SubResource( 6 )
+states/down/node = SubResource( 21 )
 states/down/position = Vector2( 565.123, 253.667 )
-states/down_reverse/node = SubResource( 19 )
-states/down_reverse/position = Vector2( 334.556, 254.259 )
+states/down_reverse/node = SubResource( 24 )
+states/down_reverse/position = Vector2( 335, 253.667 )
 states/idle/node = SubResource( 7 )
 states/idle/position = Vector2( 335, 153.667 )
-states/up/node = SubResource( 8 )
-states/up/position = Vector2( 564.597, 48.3333 )
-states/up_reverse/node = SubResource( 20 )
-states/up_reverse/position = Vector2( 335, 47.8889 )
-transitions = [ "idle", "up", SubResource( 9 ), "idle", "down", SubResource( 10 ), "down", "up", SubResource( 13 ), "up", "down", SubResource( 14 ), "up", "up_reverse", SubResource( 21 ), "up_reverse", "idle", SubResource( 22 ), "down", "down_reverse", SubResource( 23 ), "down_reverse", "idle", SubResource( 24 ) ]
+states/up/node = SubResource( 27 )
+states/up/position = Vector2( 565.123, 48.3333 )
+states/up_reverse/node = SubResource( 30 )
+states/up_reverse/position = Vector2( 335, 48.3333 )
+transitions = [ "down_reverse", "idle", SubResource( 31 ), "up_reverse", "idle", SubResource( 32 ), "idle", "up", SubResource( 33 ), "idle", "down", SubResource( 34 ), "down", "down_reverse", SubResource( 35 ), "up", "up_reverse", SubResource( 36 ) ]
 start_node = "idle"
+graph_offset = Vector2( -8.13564, -74 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=16]
 
@@ -157,7 +195,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 11 )
+texture = ExtResource( 15 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 0.164706, 1, 0, 1 )
@@ -176,3 +214,7 @@ tree_root = SubResource( 15 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 16 )
+parameters/down/TimeScale/scale = 1.0
+parameters/down_reverse/TimeScale/scale = 1.0
+parameters/up/TimeScale/scale = 1.0
+parameters/up_reverse/TimeScale/scale = 1.0
