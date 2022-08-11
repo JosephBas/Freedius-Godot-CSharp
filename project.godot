@@ -26,6 +26,10 @@ window/size/height=240
 window/size/resizable=false
 window/vsync/use_vsync=false
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/BitmapTextureFont/plugin.cfg" )
+
 [input]
 
 DEBUG_RESOLUTION_UP={

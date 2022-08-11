@@ -1,0 +1,5 @@
+Credits:
+	Sprites:
+		Javier Lozano (Highwind) [CC0] - Blue Knight (Player Sprites)
+		Javier Lozano (Highwind) [CC0] - Freedius Font 8x8 (Bitmap Font)
+			Original: Min [CC0] - 8x8 Font
