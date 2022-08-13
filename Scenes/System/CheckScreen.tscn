@@ -2,15 +2,12 @@
 
 [ext_resource path="res://Prefabs/Bitmap Fonts/Freedius_Font_Main.tres" type="BitmapFont" id=1]
 
-[node name="Node2D" type="Node2D"]
+[node name="CheckScreen" type="Node2D"]
 
 [node name="Label" type="Label" parent="."]
 margin_right = 40.0
 margin_bottom = 14.0
 custom_colors/font_color_shadow = Color( 0, 0.168627, 0.882353, 1 )
 custom_fonts/font = ExtResource( 1 )
-text = "abcdefghijklmnopqrstuvwxyz
-ABCDEFGHIJKLMNOPQRSTUVWXYZ
-1234567890
-HOLA MUNDO
-Hola Mundo"
+text = "Checking Settings and Save Data
+*Not Working Right Now*"

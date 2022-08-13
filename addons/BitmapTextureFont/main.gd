@@ -28,6 +28,8 @@ func update():
 	if texture is Texture:
 		add_texture(texture)
 		var _characterArray = characterMap.to_utf8()
+		# Set Height
+		height = size.y - 3;
 		for i in _characterArray.size():
 			var _offsetLeft : int
 			var _offsetRight : int

@@ -9,7 +9,7 @@ public class Player : KinematicBody2D
     public AnimationTree NodeAnimationTree      { get; set; }
 
     ///// States
-    private ActorState PlayerMovement           { get; set; }
+    public ActorState PlayerMovement           { get; set; }
 
     ///// Functions
 
@@ -20,8 +20,7 @@ public class Player : KinematicBody2D
         NodeAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         NodeAnimationTree = GetNode<AnimationTree>("AnimationTree");
         // Setup Player States
-        PlayerMovement = new PlayerDefaultMovementState(this);
-        PlayerMovement.Start();
+        PlayerMovement = new PlayerEnterStageState(this);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -6,7 +6,6 @@ namespace Freedius
     public class PlayerDefaultMovementState : ActorState
     {
         ///// Variables
-
         // Player Reference
         Player player_ref;
 
@@ -18,22 +17,19 @@ namespace Freedius
         float base_speed;
         float extra_speed;
 
-        // Update Animation/BlendTrees Speed
-        void UpdateAnimationSpeed()
-        {
-            player_ref.NodeAnimationTree.Set("parameters/up/TimeScale/scale",           0.75f + (extra_speed / base_speed));
-            player_ref.NodeAnimationTree.Set("parameters/up_reverse/TimeScale/scale",   0.75f + (extra_speed / base_speed));
-            player_ref.NodeAnimationTree.Set("parameters/down/TimeScale/scale",         0.75f + (extra_speed / base_speed));
-            player_ref.NodeAnimationTree.Set("parameters/down_reverse/TimeScale/scale", 0.75f + (extra_speed / base_speed));
-        }
+        // Invulnerability
+        bool is_invulnerable;
+        int counter_invulnerability;
 
-        // Constructor
+        ///// Constructor
+
         public PlayerDefaultMovementState(Player p)
         {
             player_ref = p;
+            Start();
         }
 
-        // Startup
+        ///// Startup
         public void Start()
         {
             // Get Animation State Machine reference
@@ -43,12 +39,14 @@ namespace Freedius
             // Initialize Base Speed
             base_speed  = 2.0f;
             // Initialize Extra Speed
-            extra_speed = 0.0f;
+            extra_speed = 1.0f;
+            // Start with Invulnerability
+            SetInvulnerability();
             // Setup Animation Speed
             UpdateAnimationSpeed();
         }
 
-        // Update
+        ///// Update
         public void Update(float delta)
         {
             // Read Movement Input
@@ -85,9 +83,27 @@ namespace Freedius
                 //GD.Print($"Speed Level: {extra_speed + 1}");
                 UpdateAnimationSpeed();
             }
+
+            // Check Invulnerability
+            if (is_invulnerable)
+            {
+                // Flicker
+                player_ref.Visible = !player_ref.Visible;
+                // Check Invulnetability Counter
+                if ( ++counter_invulnerability == 60 * 3 )
+                {
+                    // Set Visibility true
+                    player_ref.Visible = true;
+                    // Set Collision Layer And Mask
+                    player_ref.CollisionLayer = (uint)CollisionLayers.Obstacle;
+                    player_ref.CollisionMask = (uint)CollisionLayers.Player;
+                    // Set Flag
+                    is_invulnerable = false;
+                }
+            }
         }
 
-        // Fixed Update (Physics)
+        ///// Fixed Update (Physics)
         public void FixedUpdate(float delta)
         {
             // Move
@@ -104,6 +120,27 @@ namespace Freedius
                 clamped_position.y = Mathf.Clamp(player_ref.Position.y, GameGlobals.PlayableArea.Position.y, GameGlobals.PlayableArea.Size.y);
                 player_ref.Position = clamped_position;
             }
+        }
+
+        // Update Animation/BlendTrees Speed
+        void UpdateAnimationSpeed()
+        {
+            player_ref.NodeAnimationTree.Set("parameters/up/TimeScale/scale",           0.75f + (extra_speed / base_speed));
+            player_ref.NodeAnimationTree.Set("parameters/up_reverse/TimeScale/scale",   0.75f + (extra_speed / base_speed));
+            player_ref.NodeAnimationTree.Set("parameters/down/TimeScale/scale",         0.75f + (extra_speed / base_speed));
+            player_ref.NodeAnimationTree.Set("parameters/down_reverse/TimeScale/scale", 0.75f + (extra_speed / base_speed));
+        }
+
+        // Set invulnerability
+        void SetInvulnerability()
+        {
+            // Set Flag
+            is_invulnerable = true;
+            // Start Counter
+            counter_invulnerability = 0;
+            // Set Collision Layers and Collision Masks to 0
+            player_ref.CollisionLayer = 0;
+            player_ref.CollisionMask = 0;
         }
     }
 }
